@@ -1,4 +1,5 @@
 import unittest
+from KeyExpansion import rot_word
 
 class KeyExpansionTestCase(unittest.TestCase):
     def test_rotate_word_with_chars(self):
