@@ -34,6 +34,7 @@ class KeyExpansionTestCase(unittest.TestCase):
         result = key_expansion(input)
         for i in result:
             self.assertEqual(len(i), 16)
+            
 
 if __name__ == '__main__':
     unittest.main()
