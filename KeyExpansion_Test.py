@@ -34,7 +34,12 @@ class KeyExpansionTestCase(unittest.TestCase):
         result = key_expansion(input)
         for i in result:
             self.assertEqual(len(i), 16)
-            
+
+    def test_key_expansion_input_must_occur_first(self):
+        input = 'Hallo ich bin ein Mensch'
+
+        result = key_expansion(input)
+        self.assertEqual(result [0], input)
 
 if __name__ == '__main__':
     unittest.main()
