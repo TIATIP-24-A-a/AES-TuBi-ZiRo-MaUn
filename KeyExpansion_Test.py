@@ -18,5 +18,13 @@ class KeyExpansionTestCase(unittest.TestCase):
 
         self.assertEqual(expected, result)
 
+ def test_key_expansion_return_11_keys(self):
+        input = 'Hallo ich bin ein Mensch'
+        expected = 11
+
+        result = key_expansion(input)
+
+        self.assertEqual(expected, result.len())
+
 if __name__ == '__main__':
     unittest.main()
