@@ -41,5 +41,13 @@ class KeyExpansionTestCase(unittest.TestCase):
         result = key_expansion(input)
         self.assertEqual(result [0], input)
 
+    def test_key_expansion_result_must_be_unique_for_all_elements(self):
+        input = 'Hallo ich binnnn'
+
+        result = key_expansion(input)
+        uniqueResult = set(result)
+
+        self.assertEqual(len(uniqueResult), 11)
+
 if __name__ == '__main__':
     unittest.main()
