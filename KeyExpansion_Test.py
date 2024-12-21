@@ -29,14 +29,14 @@ class KeyExpansionTestCase(unittest.TestCase):
         self.assertEqual(expected, len(result))
 
     def test_key_expansion_expect_16bytes_key(self):
-        input = 'Hallo ich bin ein Mensch'
+        input = 'Hallo ich binnnn'
 
         result = key_expansion(input)
         for i in result:
             self.assertEqual(len(i), 16)
 
     def test_key_expansion_input_must_occur_first(self):
-        input = 'Hallo ich bin ein Mensch'
+        input = 'Hallo ich binnnn'
 
         result = key_expansion(input)
         self.assertEqual(result [0], input)

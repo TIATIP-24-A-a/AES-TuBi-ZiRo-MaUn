@@ -3,7 +3,7 @@ def rot_word(word):
     return word[1:] + word[:1]
 
 def key_expansion(key):
-    return ['aaaaaaaaaaaaaaaa',
+    return [key,
             'aaaaaaaaaaaaaaaa',
             'aaaaaaaaaaaaaaaa',
             'aaaaaaaaaaaaaaaa',
