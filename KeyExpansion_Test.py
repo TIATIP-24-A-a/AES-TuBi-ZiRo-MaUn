@@ -1,5 +1,6 @@
 import unittest
-from KeyExpansion import rot_word
+from KeyExpansion import rot_word, key_expansion
+
 
 class KeyExpansionTestCase(unittest.TestCase):
     def test_rotate_word_with_chars(self):
@@ -18,13 +19,13 @@ class KeyExpansionTestCase(unittest.TestCase):
 
         self.assertEqual(expected, result)
 
- def test_key_expansion_return_11_keys(self):
+    def test_key_expansion_return_11_keys(self):
         input = 'Hallo ich bin ein Mensch'
         expected = 11
 
         result = key_expansion(input)
 
-        self.assertEqual(expected, result.len())
+        self.assertEqual(expected, len(result))
 
 if __name__ == '__main__':
     unittest.main()
