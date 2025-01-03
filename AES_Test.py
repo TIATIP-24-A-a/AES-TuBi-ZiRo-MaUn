@@ -1,6 +1,6 @@
 import unittest
 
-from AES import split_blocks, sub_word
+from AES import split_blocks, sub_word, shift_rows
 
 
 class AesTestCase(unittest.TestCase):
@@ -48,6 +48,23 @@ class AesTestCase(unittest.TestCase):
             159
         ]
         result = sub_word(block)
+
+        self.assertEqual(result, expected)
+
+    def test_shift_rows(self):
+        block = [
+            'Hall',
+            'o ic',
+            'h bi',
+            'nnnn'
+        ]
+        expected = [
+            'Hall',
+            ' ico',
+            'bih ',
+            'nnnn'
+        ]
+        result = shift_rows(block)
 
         self.assertEqual(result, expected)
 
