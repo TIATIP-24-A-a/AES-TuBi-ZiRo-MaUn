@@ -44,3 +44,6 @@ def split_blocks(text):
         plain_text_split.append(text[i * 16:i * 16 + 16])
 
     return plain_text_split
+
+def sub_word(word):
+    return [S_BOX[b >> 4][b & 0x0F] for b in word]
