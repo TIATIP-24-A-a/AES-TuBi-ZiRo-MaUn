@@ -50,3 +50,22 @@ def sub_word(word):
 
 def shift_rows(state):
     return [state[i][i:] + state[i][:i] for i in range(4)]
+
+
+# Simple function to apply MixColumns
+def mix_columns(state):
+    # Process each column
+    for i in range(4):
+        # Take the values in each column (a, b, c, d) from state
+        a = state[0][i]
+        b = state[1][i]
+        c = state[2][i]
+        d = state[3][i]
+
+        # Normalerweise wird es mit einem Gallius Feld berechnet. Einfachheitshalber simulieren wir dies mit simplen addition und subtraktionen.
+        state[0][i] = a + b + c + d  # This is a simple sum of the values (just for illustration)
+        state[1][i] = a + b - c + d
+        state[2][i] = a - b + c + d
+        state[3][i] = a + b + c - d
+
+    return state
