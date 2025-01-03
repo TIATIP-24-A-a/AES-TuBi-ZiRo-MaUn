@@ -1,6 +1,6 @@
 import unittest
 
-from AES import split_blocks, sub_word, shift_rows
+from AES import split_blocks, sub_word, shift_rows, mix_columns
 
 
 class AesTestCase(unittest.TestCase):
@@ -68,6 +68,22 @@ class AesTestCase(unittest.TestCase):
 
         self.assertEqual(result, expected)
 
+    def test_mix_columns(self):
+        block = [
+            [82, 239, 80, 80],
+            [168, 183, 249, 251],
+            [69, 183, 170, 249],
+            [159, 159, 159, 159]
+        ]
+        expected = [
+            [478, 764, 658, 739],
+            [340, 398, 318, 241],
+            [142, 398, 160, 237],
+            [160, 446, 340, 421]
+        ]
+        result = mix_columns(block)
+
+        self.assertEqual(result, expected)
 
 if __name__ == '__main__':
     unittest.main()
