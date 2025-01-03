@@ -1,6 +1,6 @@
 import unittest
 
-from AES import split_blocks, sub_word, shift_rows, mix_columns
+from AES import split_blocks, sub_word, shift_rows, mix_columns, add_round_key
 
 
 class AesTestCase(unittest.TestCase):
@@ -84,6 +84,31 @@ class AesTestCase(unittest.TestCase):
         result = mix_columns(block)
 
         self.assertEqual(result, expected)
+
+    def test_add_round_key(self):
+        state = [
+            [b'Hall'],
+            [b'o ic'],
+            [b'h in'],
+            [b'1234'],
+        ]
+        key = [
+            [b'aaaa'],
+            [b'aaaa'],
+            [b'aaaa'],
+            [b'aaaa'],
+        ]
+        expected = [
+            [b')\x00\r\r'],
+            [b'\x0eA\x08\x02'],
+            [b'\tA\x08\x0f'],
+            [b'PSRU']
+        ]
+
+        result = add_round_key(state, key)
+
+        self.assertEqual(expected, result)
+
 
 if __name__ == '__main__':
     unittest.main()
