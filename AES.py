@@ -67,6 +67,29 @@ def shift_rows(state):
     return [state[i][i:] + state[i][:i] for i in range(4)]
 
 
+def add_round_key(state: List[List[bytes]], key: List[List[bytes]]) -> List[List[bytes]]:
+    """
+    Fügt den Round Key zum State mit XOR hinzu
+    :param state: aktueller State
+    :param key: Round Key zum Hinzufügen
+    :return: Neuer State
+    """
+    new_state: List[List[bytes]] = []
+
+    # State und Key wird per XOR neugeschrieben
+    for state_row_bytes, key_row_bytes in zip(state, key):
+        row_state: List[bytes] = []
+        for state_col_bytes, key_col_bytes in zip(state_row_bytes, key_row_bytes):
+            col = bytearray()
+            for state_col_byte, key_col_byte in zip(state_col_bytes, key_col_bytes):
+                col.append(state_col_byte ^ key_col_byte)
+            row_state.append(col)
+
+        new_state.append(row_state)
+
+    return new_state
+
+
 # Simple function to apply MixColumns
 def mix_columns(state):
     # Process each column
