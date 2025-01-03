@@ -1,6 +1,6 @@
 import unittest
 
-from AES import split_blocks
+from AES import split_blocks, sub_word
 
 
 class AesTestCase(unittest.TestCase):
@@ -24,6 +24,30 @@ class AesTestCase(unittest.TestCase):
             ' 123            ',
         ]
         result = split_blocks(text)
+
+        self.assertEqual(result, expected)
+
+    def test_subword(self):
+        block = b'Hallo ich binnnn'
+        expected = [
+            82,
+            239,
+            80,
+            80,
+            168,
+            183,
+            249,
+            251,
+            69,
+            183,
+            170,
+            249,
+            159,
+            159,
+            159,
+            159
+        ]
+        result = sub_word(block)
 
         self.assertEqual(result, expected)
 
