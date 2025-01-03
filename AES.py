@@ -37,13 +37,27 @@ INV_S_BOX = [
 ]
 
 
-def split_blocks(text):
-    plain_text_split = []
+def split_blocks(text: str) -> List[bytes]:
+    block_size = 16
+    padding_char = ' '
+    blocks: List[str] = []
     length = len(text)
-    for i in range(length // 16):
-        plain_text_split.append(text[i * 16:i * 16 + 16])
 
-    return plain_text_split
+    for i in range(length // block_size):
+        blocks.append(text[i * block_size:i * block_size + block_size])
+
+    if not length % block_size == 0:
+        blocks.append(text[block_size * (length // block_size):])
+
+    # Letzter Block mit Padding auffüllen, wenn block_size nicht erreicht wird
+    last_block_len = len(blocks[-1])
+    if last_block_len < block_size:
+        padding_size = block_size - last_block_len
+        blocks[-1] += padding_char * padding_size
+
+    # In Liste von Bytes-Blöcken umwandeln
+    return [block.encode() for block in blocks]
+
 
 def sub_word(word):
     return [S_BOX[b >> 4][b & 0x0F] for b in word]
