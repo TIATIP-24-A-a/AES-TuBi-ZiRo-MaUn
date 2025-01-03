@@ -47,3 +47,6 @@ def split_blocks(text):
 
 def sub_word(word):
     return [S_BOX[b >> 4][b & 0x0F] for b in word]
+
+def shift_rows(state):
+    return [state[i][i:] + state[i][:i] for i in range(4)]
