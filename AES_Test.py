@@ -7,10 +7,10 @@ class AesTestCase(unittest.TestCase):
     def test_split_blocks_must_return_16_bytes_blocks(self):
         text = 'Hallo ich binnnnHallo ich binnnnHallo ich binnnnHallo ich binnnn'
         expected = [
-            'Hallo ich binnnn',
-            'Hallo ich binnnn',
-            'Hallo ich binnnn',
-            'Hallo ich binnnn',
+            b'Hallo ich binnnn',
+            b'Hallo ich binnnn',
+            b'Hallo ich binnnn',
+            b'Hallo ich binnnn',
         ]
         result = split_blocks(text)
 
@@ -19,9 +19,9 @@ class AesTestCase(unittest.TestCase):
     def test_split_blocks_must_return_16_bytes_blocks_with_pad_bytes(self):
         text = 'Hallo ich binnnnHallo ich binnnn 123'
         expected = [
-            'Hallo ich binnnn',
-            'Hallo ich binnnn',
-            ' 123            ',
+            b'Hallo ich binnnn',
+            b'Hallo ich binnnn',
+            b' 123            ',
         ]
         result = split_blocks(text)
 
