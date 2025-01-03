@@ -47,13 +47,14 @@ def split_blocks(text: str) -> List[bytes]:
         blocks.append(text[i * block_size:i * block_size + block_size])
 
     if not length % block_size == 0:
-        blocks.append(text[block_size * (length // block_size):])
+        last_block = text[block_size * (length // block_size):]
 
-    # Letzter Block mit Padding auffüllen, wenn block_size nicht erreicht wird
-    last_block_len = len(blocks[-1])
-    if last_block_len < block_size:
+        # Letzter Block mit Padding auffüllen
+        last_block_len = len(last_block)
         padding_size = block_size - last_block_len
-        blocks[-1] += padding_char * padding_size
+        last_block += padding_char * padding_size
+
+        blocks.append(last_block)
 
     # In Liste von Bytes-Blöcken umwandeln
     return [block.encode() for block in blocks]
