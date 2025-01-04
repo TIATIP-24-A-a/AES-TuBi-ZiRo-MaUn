@@ -1,6 +1,6 @@
 import unittest
 
-from AES import split_blocks, sub_word, shift_rows, mix_columns, add_round_key
+from AES import split_blocks, sub_word, shift_rows, mix_columns, add_round_key, key_expansion, rot_word
 
 
 class AesTestCase(unittest.TestCase):
@@ -26,6 +26,54 @@ class AesTestCase(unittest.TestCase):
         result = split_blocks(text)
 
         self.assertEqual(result, expected)
+
+    def test_rotate_word_with_chars(self):
+        input = ['a', 'b', 'c', 'd']
+        expected = ['b', 'c', 'd', 'a']
+
+        result = rot_word(input)
+
+        self.assertEqual(expected, result)
+
+    def test_rotate_word_with_words(self):
+        input = ['Hallo', 'ich', 'bin', 'ein', 'Test']
+        expected = ['ich', 'bin', 'ein', 'Test', 'Hallo']
+
+        result = rot_word(input)
+
+        self.assertEqual(expected, result)
+
+    def test_key_expansion_return_11_keys(self):
+        key = 'Hallo ich bin ein Mensch'
+        expected = 11
+
+        result = key_expansion(key)
+
+        self.assertEqual(expected, len(result))
+
+    def test_key_expansion_expect_16bytes_key(self):
+        key = 'Hallo ich binnnn'
+
+        result = key_expansion(key)
+        for i in result:
+            self.assertEqual(len(i), 16)
+
+    def test_key_expansion_input_must_occur_first(self):
+        key = 'Hallo ich binnnn'
+        expected = key.encode()
+
+        result = key_expansion(key)
+
+        self.assertEqual(expected, result[0])
+
+    def test_key_expansion_result_must_be_unique_for_all_elements(self):
+        key = 'Hallo ich binnnn'
+        expected = 11
+
+        result = key_expansion(key)
+        unique_result_len = len(set(result))
+
+        self.assertEqual(expected, unique_result_len)
 
     def test_subword(self):
         block = b'Hallo ich binnnn'
