@@ -1,6 +1,7 @@
 import unittest
+from os import urandom
 
-from AES import split_blocks, sub_word, shift_rows, mix_columns, add_round_key, key_expansion, rot_word
+from AES import split_blocks, sub_word, shift_rows, mix_columns, add_round_key, key_expansion, rot_word, bytes_to_matrix
 
 
 class AesTestCase(unittest.TestCase):
@@ -155,6 +156,22 @@ class AesTestCase(unittest.TestCase):
 
         result = add_round_key(state, key)
 
+        self.assertEqual(expected, result)
+
+    def test_bytes_to_matrix_should_raise_error_when_not_16_bytes(self):
+        value = urandom(15)
+        self.assertRaises(ValueError, bytes_to_matrix, value)
+
+    def test_bytes_to_matrx_should_return_matrix(self):
+        value = b'ABCDEFGHIJKLMNOP'
+        expected = [
+            [65, 69, 73, 77],
+            [66, 70, 74, 78],
+            [67, 71, 75, 79],
+            [68, 72, 76, 80]
+        ]
+
+        result = bytes_to_matrix(value)
         self.assertEqual(expected, result)
 
 
