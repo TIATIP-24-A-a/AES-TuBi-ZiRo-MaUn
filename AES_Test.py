@@ -76,27 +76,11 @@ class AesTestCase(unittest.TestCase):
 
         self.assertEqual(expected, unique_result_len)
 
-    def test_subword(self):
-        block = b'Hallo ich binnnn'
-        expected = [
-            82,
-            239,
-            80,
-            80,
-            168,
-            183,
-            249,
-            251,
-            69,
-            183,
-            170,
-            249,
-            159,
-            159,
-            159,
-            159
-        ]
-        result = sub_word(block)
+    def test_sub_word(self):
+        word = [65, 66, 67, 68]
+        expected = [131, 44, 26, 27]
+
+        result = sub_word(word)
 
         self.assertEqual(result, expected)
 
