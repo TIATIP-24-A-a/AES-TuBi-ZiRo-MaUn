@@ -86,6 +86,26 @@ def sub_word(word):
     return [S_BOX[b >> 4][b & 0x0F] for b in word]
 
 
+def bytes_to_matrix(data: bytes) -> list[list[int]]:
+    """
+    Wandelt die Bytes in ein 4x4 Matrix um
+    :param data: Muss 16 Bytes sein
+    :return: 4x4 Matrix
+    """
+    if len(data) != 16:
+        raise ValueError('Data must be 16 bytes')
+
+    d = data
+    matrix = [
+        [d[0], d[4], d[8], d[12]],
+        [d[1], d[5], d[9], d[13]],
+        [d[2], d[6], d[10], d[14]],
+        [d[3], d[7], d[11], d[15]],
+    ]
+
+    return matrix
+
+
 def shift_rows(state):
     return [state[i][i:] + state[i][:i] for i in range(4)]
 
