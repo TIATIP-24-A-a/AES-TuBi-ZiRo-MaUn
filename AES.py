@@ -37,10 +37,10 @@ INV_S_BOX = [
 ]
 
 
-def split_blocks(text: str) -> List[bytes]:
+def split_blocks(text: str) -> list[bytes]:
     block_size = 16
     padding_char = ' '
-    blocks: List[str] = []
+    blocks: list[str] = []
     length = len(text)
 
     for i in range(length // block_size):
@@ -63,22 +63,23 @@ def split_blocks(text: str) -> List[bytes]:
 def sub_word(word):
     return [S_BOX[b >> 4][b & 0x0F] for b in word]
 
+
 def shift_rows(state):
     return [state[i][i:] + state[i][:i] for i in range(4)]
 
 
-def add_round_key(state: List[List[bytes]], key: List[List[bytes]]) -> List[List[bytes]]:
+def add_round_key(state: list[list[bytes]], key: list[list[bytes]]) -> list[list[bytes]]:
     """
     Fügt den Round Key zum State mit XOR hinzu
     :param state: aktueller State
     :param key: Round Key zum Hinzufügen
     :return: Neuer State
     """
-    new_state: List[List[bytes]] = []
+    new_state: list[list[bytes]] = []
 
     # State und Key wird per XOR neugeschrieben
     for state_row_bytes, key_row_bytes in zip(state, key):
-        row_state: List[bytes] = []
+        row_state: list[bytes] = []
         for state_col_bytes, key_col_bytes in zip(state_row_bytes, key_row_bytes):
             col = bytearray()
             for state_col_byte, key_col_byte in zip(state_col_bytes, key_col_bytes):
