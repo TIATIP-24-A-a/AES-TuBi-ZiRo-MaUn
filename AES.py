@@ -65,19 +65,20 @@ def rot_word(word):
     return word[1:] + word[:1]
 
 
-def key_expansion(key: str) -> list[bytes]:
+def key_expansion(key: bytes) -> list[list[list[int]]]:
     """
     Erstellt anhand Key, weitere Keys für die Runden
     AES 128 -> 11 Keys
     :param key:  Initial Key für die Erweiterung
-    :return: Liste von Keys in bytes
+    :return: Liste von Key-Matrix
     """
-    round_keys: list[bytes] = [key.encode()]
+    initial_key_matrix = bytes_to_matrix(key)
+    round_keys: list[list[list[int]]] = [initial_key_matrix]
 
     for i in range(10):
-        round_key = round_keys[-1]
-        round_key = rot_word(round_key)
-        round_keys.append(round_key)
+        last_round_key = round_keys[-1]
+        next_round_key = [sub_word(rot_word(word)) for word in last_round_key]
+        round_keys.append(next_round_key)
 
     return round_keys
 
