@@ -82,7 +82,7 @@ def key_expansion(key: str) -> list[bytes]:
     return round_keys
 
 
-def sub_word(word):
+def sub_word(word: list[int]) -> list[int]:
     return [S_BOX[b >> 4][b & 0x0F] for b in word]
 
 
