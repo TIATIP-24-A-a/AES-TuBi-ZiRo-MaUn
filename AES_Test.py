@@ -44,45 +44,13 @@ class AesTestCase(unittest.TestCase):
 
         self.assertEqual(expected, result)
 
-    def test_key_expansion_return_11_keys(self):
-        key = 'Hallo ich bin ein Mensch'
-        expected = 11
-
-        result = key_expansion(key)
-
-        self.assertEqual(expected, len(result))
-
-    def test_key_expansion_expect_16bytes_key(self):
-        key = 'Hallo ich binnnn'
-
-        result = key_expansion(key)
-        for i in result:
-            self.assertEqual(len(i), 16)
-
-    def test_key_expansion_input_must_occur_first(self):
-        key = 'Hallo ich binnnn'
-        expected = key.encode()
-
-        result = key_expansion(key)
-
-        self.assertEqual(expected, result[0])
-
-    def test_key_expansion_result_must_be_unique_for_all_elements(self):
-        key = 'Hallo ich binnnn'
-        expected = 11
-
-        result = key_expansion(key)
-        unique_result_len = len(set(result))
-
-        self.assertEqual(expected, unique_result_len)
-
     def test_sub_word(self):
         word = [65, 66, 67, 68]
         expected = [131, 44, 26, 27]
 
         result = sub_word(word)
 
-        self.assertEqual(result, expected)
+        self.assertEqual(expected, result)
 
     def test_shift_rows(self):
         block = [
@@ -158,6 +126,41 @@ class AesTestCase(unittest.TestCase):
         result = bytes_to_matrix(value)
         self.assertEqual(expected, result)
 
+
+class KeyExpansionTestCase(unittest.TestCase):
+    def test_key_expansion_return_11_keys(self):
+        key = urandom(16)
+        expected = 11
+
+        result = key_expansion(key)
+
+        self.assertEqual(expected, len(result))
+
+    def test_key_expansion_expect_44_words_total(self):
+        key = b'Hallo ich binnnn'
+        expected = 44
+
+        round_keys = key_expansion(key)
+        total_words_len = 0
+
+        for words in round_keys:
+            total_words_len += len(words)
+
+        self.assertEqual(expected, total_words_len)
+
+    def test_key_expansion_input_must_occur_first(self):
+        key = b'Hallo ich binnnn'
+        expected = [
+            [72, 111, 104, 110],
+            [97, 32, 32, 110],
+            [108, 105, 98, 110],
+            [108, 99, 105, 110]
+        ]
+
+        result = key_expansion(key)
+        first_key = result[0]
+
+        self.assertEqual(expected, first_key)
 
 if __name__ == '__main__':
     unittest.main()
