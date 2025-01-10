@@ -70,17 +70,18 @@ class AesTestCase(unittest.TestCase):
 
     def test_sub_bytes(self):
         block = [
-            [82, 239, 80, 80],
-            [168, 183, 249, 251],
-            [69, 183, 170, 249],
-            [159, 159, 159, 159]
+            [0x52, 0xef, 0x50, 0x50],
+            [0xa8, 0xb7, 0xf9, 0xfb],
+            [0x45, 0xb7, 0xaa, 0xf9],
+            [0x9f, 0x9f, 0x9f, 0x9f]
         ]
         expected = [
-            [0, 223, 83, 83],
-            [194, 169, 153, 15],
-            [110, 169, 172, 153],
-            [219, 219, 219, 219]
+            [0x00, 0xdf, 0x53, 0x53],
+            [0xc2, 0xa9, 0x99, 0x0f],
+            [0x6e, 0xa9, 0xac, 0x99],
+            [0xdb, 0xdb, 0xdb, 0xdb]
         ]
+
         result = sub_bytes(block)
 
         self.assertEqual(expected, result)
