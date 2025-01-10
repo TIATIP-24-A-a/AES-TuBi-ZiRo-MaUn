@@ -1,7 +1,7 @@
 import unittest
 from os import urandom
 
-from AES import split_blocks, sub_word, shift_rows, mix_columns, add_round_key, key_expansion, rot_word, bytes_to_matrix
+from AES import split_blocks, sub_word, shift_rows, mix_columns, add_round_key, key_expansion, rot_word, bytes_to_matrix, sub_bytes
 
 
 class AesTestCase(unittest.TestCase):
@@ -65,6 +65,23 @@ class AesTestCase(unittest.TestCase):
         expected = [131, 44, 26, 27]
 
         result = sub_word(word)
+
+        self.assertEqual(expected, result)
+
+    def test_sub_bytes(self):
+        block = [
+            [82, 239, 80, 80],
+            [168, 183, 249, 251],
+            [69, 183, 170, 249],
+            [159, 159, 159, 159]
+        ]
+        expected = [
+            [0, 223, 83, 83],
+            [194, 169, 153, 15],
+            [110, 169, 172, 153],
+            [219, 219, 219, 219]
+        ]
+        result = sub_bytes(block)
 
         self.assertEqual(expected, result)
 
