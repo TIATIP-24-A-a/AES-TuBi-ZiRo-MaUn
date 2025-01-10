@@ -126,6 +126,14 @@ def bytes_to_matrix(data: bytes) -> list[list[int]]:
 
     return matrix
 
+def matrix_to_bytes(matrix: list[list[int]]) -> bytes:
+    """
+    Wandelt die Matrix in Bytes um (column-major order)
+    :param matrix: 4x4 Matrix
+    :return: Bytes
+    """
+    return bytes([matrix[row][col] for col in range(4) for row in range(4)])
+
 
 def shift_rows(state):
     return [state[i][i:] + state[i][:i] for i in range(4)]
