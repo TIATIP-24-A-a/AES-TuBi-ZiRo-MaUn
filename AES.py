@@ -90,6 +90,23 @@ def sub_word(word: list[int]) -> list[int]:
     return [S_BOX[b >> 4][b & 0x0F] for b in word]
 
 
+def sub_bytes(state: list[list[int]]) -> list[list[int]]:
+    """
+    Ersetzt die Bytes im State mit den Werten aus der S-Box
+    :param state: 4x4 Matrix
+    :return: Neuer State
+    """
+    
+    for row in range(4):
+        for col in range(4):
+            byte = state[row][col]
+            row_index = (byte >> 4) & 0x0F
+            col_index = byte & 0x0F
+            state[row][col] = S_BOX[row_index][col_index]
+
+    return state
+
+
 def bytes_to_matrix(data: bytes) -> list[list[int]]:
     """
     Wandelt die Bytes in ein 4x4 Matrix um
