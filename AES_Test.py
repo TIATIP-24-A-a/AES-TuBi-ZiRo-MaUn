@@ -5,28 +5,44 @@ from AES import split_blocks, sub_word, shift_rows, mix_columns, add_round_key, 
 
 
 class AesTestCase(unittest.TestCase):
-    def test_split_blocks_must_return_16_bytes_blocks(self):
-        text = 'Hallo ich binnnnHallo ich binnnnHallo ich binnnnHallo ich binnnn'
-        expected = [
-            b'Hallo ich binnnn',
-            b'Hallo ich binnnn',
-            b'Hallo ich binnnn',
-            b'Hallo ich binnnn',
+    def test_split_blocks_must_return_correct_blocks(self):
+        text = b"Hallo ich binnnnI'm a 4x4 Matrix"
+        expected_block_len = 2
+        expected_first_block = [
+            [ord('H'), ord('o'), ord('h'), ord('n')],
+            [ord('a'), ord(' '), ord(' '), ord('n')],
+            [ord('l'), ord('i'), ord('b'), ord('n')],
+            [ord('l'), ord('c'), ord('i'), ord('n')]
         ]
-        result = split_blocks(text)
-
-        self.assertEqual(result, expected)
-
-    def test_split_blocks_must_return_16_bytes_blocks_with_pad_bytes(self):
-        text = 'Hallo ich binnnnHallo ich binnnn 123'
-        expected = [
-            b'Hallo ich binnnn',
-            b'Hallo ich binnnn',
-            b' 123            ',
+        expected_second_block = [
+            [ord('I'), ord('a'), ord('4'), ord('t')],
+            [ord("'"), ord(' '), ord(' '), ord('r')],
+            [ord('m'), ord('4'), ord('M'), ord('i')],
+            [ord(' '), ord('x'), ord('a'), ord('x')]
         ]
-        result = split_blocks(text)
 
-        self.assertEqual(result, expected)
+
+        result = split_blocks(text)
+        result_block_len = len(result)
+
+        self.assertEqual(expected_block_len, result_block_len)
+        self.assertEqual(expected_first_block, result[0])
+        self.assertEqual(expected_second_block, result[1])
+
+
+    def test_split_blocks_must_return_last_block_with_padding(self):
+        text = b'Hallo ich binnnn 123'
+        expected_last_block = [
+            [ord(' '), ord(' '), ord(' '), ord(' ')],
+            [ord('1'), ord(' '), ord(' '), ord(' ')],
+            [ord('2'), ord(' '), ord(' '), ord(' ')],
+            [ord('3'), ord(' '), ord(' '), ord(' ')]
+        ]
+
+        result = split_blocks(text)
+        result_last_block = result[-1]
+
+        self.assertEqual(expected_last_block, result_last_block)
 
     def test_rotate_word_with_chars(self):
         input = ['a', 'b', 'c', 'd']
