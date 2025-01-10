@@ -105,17 +105,18 @@ class AesTestCase(unittest.TestCase):
 
     def test_mix_columns(self):
         block = [
-            [82, 239, 80, 80],
-            [168, 183, 249, 251],
-            [69, 183, 170, 249],
-            [159, 159, 159, 159]
+            [0x52, 0xef, 0x50, 0x50],
+            [0xa8, 0xb7, 0xf9, 0xfb],
+            [0x45, 0xb7, 0xaa, 0xf9],
+            [0x9f, 0x9f, 0x9f, 0x9f]
         ]
         expected = [
-            [478, 764, 658, 739],
-            [340, 398, 318, 241],
-            [142, 398, 160, 237],
-            [160, 446, 340, 421]
+            [0x1de, 0x2fc, 0x292, 0x2e3],
+            [0x154, 0x18e, 0x13e, 0xf1],
+            [0x8e, 0x18e, 0xa0, 0xed],
+            [0xa0, 0x1be, 0x154, 0x1a5]
         ]
+        
         result = mix_columns(block)
 
         self.assertEqual(result, expected)
