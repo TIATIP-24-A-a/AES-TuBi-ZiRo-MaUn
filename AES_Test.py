@@ -1,7 +1,7 @@
 import unittest
 from os import urandom
 
-from AES import split_blocks, sub_word, shift_rows, mix_columns, add_round_key, key_expansion, rot_word, bytes_to_matrix, sub_bytes
+from AES import add_round_key_matrix, matrix_to_bytes, split_blocks, sub_word, shift_rows, mix_columns, add_round_key, key_expansion, rot_word, bytes_to_matrix, sub_bytes
 
 
 class AesTestCase(unittest.TestCase):
@@ -159,6 +159,19 @@ class AesTestCase(unittest.TestCase):
         ]
 
         result = bytes_to_matrix(value)
+        self.assertEqual(expected, result)
+
+    def test_matrix_to_bytes(self):
+        matrix = [
+            [ord('A'), ord('E'), ord('I'), ord('M')],
+            [ord('B'), ord('F'), ord('J'), ord('N')],
+            [ord('C'), ord('G'), ord('K'), ord('O')],
+            [ord('D'), ord('H'), ord('L'), ord('P')]
+        ]
+        expected = b'ABCDEFGHIJKLMNOP'
+
+        result = matrix_to_bytes(matrix)
+
         self.assertEqual(expected, result)
 
 
