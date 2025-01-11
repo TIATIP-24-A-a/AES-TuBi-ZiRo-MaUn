@@ -1,7 +1,7 @@
 import unittest
 from os import urandom
 
-from AES import add_round_key_matrix, matrix_to_bytes, split_blocks, sub_word, shift_rows, mix_columns, add_round_key, key_expansion, rot_word, bytes_to_matrix, sub_bytes
+from AES import matrix_to_bytes, split_blocks, sub_word, shift_rows, mix_columns, add_round_key, key_expansion, rot_word, bytes_to_matrix, sub_bytes
 
 
 class AesTestCase(unittest.TestCase):
