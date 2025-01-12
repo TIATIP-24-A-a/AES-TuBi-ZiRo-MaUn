@@ -123,22 +123,22 @@ class AesTestCase(unittest.TestCase):
 
     def test_add_round_key(self):
         state = [
-            [b'Hall'],
-            [b'o ic'],
-            [b'h in'],
-            [b'1234'],
+            [ord('H'), ord('o'), ord('h'), ord('1')],
+            [ord('a'), ord(' '), ord(' '), ord('2')],
+            [ord('l'), ord('i'), ord('i'), ord('3')],
+            [ord('l'), ord('c'), ord('n'), ord('4')]
         ]
         key = [
-            [b'aaaa'],
-            [b'aaaa'],
-            [b'aaaa'],
-            [b'aaaa'],
+            [ord('m'), ord('u'), ord(' '), ord('r')],
+            [ord('y'), ord('p'), ord('s'), ord('e')],
+            [ord(' '), ord('e'), ord('e'), ord('t')],
+            [ord('s'), ord('r'), ord('c'), ord(' ')]
         ]
         expected = [
-            [b')\x00\r\r'],
-            [b'\x0eA\x08\x02'],
-            [b'\tA\x08\x0f'],
-            [b'PSRU']
+            [ord('%'), ord('\x1a'), ord('H'), ord('C')],
+            [ord('\x18'), ord('P'), ord('S'), ord('W')],
+            [ord('L'), ord('\x0c'), ord('\x0c'), ord('G')],
+            [ord('\x1f'), ord('\x11'), ord('\x0d'), ord('\x14')]
         ]
 
         result = add_round_key(state, key)
