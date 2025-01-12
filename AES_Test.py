@@ -1,7 +1,8 @@
 import unittest
 from os import urandom
 
-from AES import matrix_to_bytes, split_blocks, sub_word, shift_rows, mix_columns, add_round_key, key_expansion, rot_word, bytes_to_matrix, sub_bytes
+from AES import matrix_to_bytes, split_blocks, sub_word, shift_rows, mix_columns, add_round_key, key_expansion, rot_word, \
+    bytes_to_matrix, sub_bytes
 
 
 class AesTestCase(unittest.TestCase):
@@ -116,7 +117,7 @@ class AesTestCase(unittest.TestCase):
             [0x8e, 0x18e, 0xa0, 0xed],
             [0xa0, 0x1be, 0x154, 0x1a5]
         ]
-        
+
         result = mix_columns(block)
 
         self.assertEqual(result, expected)
@@ -196,19 +197,28 @@ class KeyExpansionTestCase(unittest.TestCase):
 
         self.assertEqual(expected, total_words_len)
 
-    def test_key_expansion_input_must_occur_first(self):
-        key = b'Hallo ich binnnn'
-        expected = [
-            [72, 111, 104, 110],
-            [97, 32, 32, 110],
-            [108, 105, 98, 110],
-            [108, 99, 105, 110]
+    def test_key_expansion_has_correct_first_and_last_key(self):
+        key = b'This is a key123'
+        expected_first_key = [
+            [ord('T'), ord(' '), ord('a'), ord('y')],
+            [ord('h'), ord('i'), ord(' '), ord('1')],
+            [ord('i'), ord('s'), ord('k'), ord('2')],
+            [ord('s'), ord(' '), ord('e'), ord('3')]
+        ]
+        expected_last_key = [
+            [ord('\xe2'), ord('F'), ord('!'), ord('\x02')],
+            [ord('H'), ord('\xc0'), ord('P'), ord('\xc3')],
+            [ord('\xac'), ord('\x8e'), ord('E'), ord('~')],
+            [ord('\x92'), ord('g'), ord('\xd8'), ord('f')]
         ]
 
         result = key_expansion(key)
         first_key = result[0]
+        last_key = result[-1]
 
-        self.assertEqual(expected, first_key)
+        self.assertEqual(expected_first_key, first_key)
+        self.assertEqual(expected_last_key, last_key)
+
 
 if __name__ == '__main__':
     unittest.main()
