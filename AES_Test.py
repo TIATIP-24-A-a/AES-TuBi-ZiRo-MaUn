@@ -45,22 +45,23 @@ class TestAes:
 
         assert expected_last_block == result_last_block
 
+
     rot_word_testdata = [
         (['a', 'b', 'c', 'd'], ['b', 'c', 'd', 'a']),
         (['Hallo', 'ich', 'bin', 'ein', 'Test'], ['ich', 'bin', 'ein', 'Test', 'Hallo'])
     ]
-
     @pytest.mark.parametrize('input, expected', rot_word_testdata)
     def test_rot_word(self, input, expected):
         result = rot_word(input)
         assert expected == result
 
-    def test_sub_word(self):
-        word = [65, 66, 67, 68]
-        expected = [131, 44, 26, 27]
-
-        result = sub_word(word)
-
+    sub_word_testdata = [
+        ([65, 66, 67, 68], [131, 44, 26, 27]),
+        ([0x25, 0xfe, 0x51, 0x32], [0x3f, 0xbb, 0xd1, 0x23])
+    ]
+    @pytest.mark.parametrize('input, expected', sub_word_testdata)
+    def test_sub_word(self, input, expected):
+        result = sub_word(input)
         assert expected == result
 
     def test_sub_bytes(self):
