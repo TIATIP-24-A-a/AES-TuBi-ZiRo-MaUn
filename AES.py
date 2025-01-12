@@ -64,8 +64,12 @@ def split_blocks(text_bytes: bytes) -> list[list[list[int]]]:
     return blocks
 
 
-# Rotation eines Wortes rechts nach links
-def rot_word(word):
+
+def rot_word(word: list[int]) -> list[int]:
+    """
+    Rotation eines Elements von rechts nach links
+    """
+
     return word[1:] + word[:1]
 
 

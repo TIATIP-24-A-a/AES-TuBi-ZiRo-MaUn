@@ -45,20 +45,14 @@ class TestAes:
 
         assert expected_last_block == result_last_block
 
-    def test_rotate_word_with_chars(self):
-        input = ['a', 'b', 'c', 'd']
-        expected = ['b', 'c', 'd', 'a']
+    rot_word_testdata = [
+        (['a', 'b', 'c', 'd'], ['b', 'c', 'd', 'a']),
+        (['Hallo', 'ich', 'bin', 'ein', 'Test'], ['ich', 'bin', 'ein', 'Test', 'Hallo'])
+    ]
 
+    @pytest.mark.parametrize('input, expected', rot_word_testdata)
+    def test_rot_word(self, input, expected):
         result = rot_word(input)
-
-        assert expected == result
-
-    def test_rotate_word_with_words(self):
-        input = ['Hallo', 'ich', 'bin', 'ein', 'Test']
-        expected = ['ich', 'bin', 'ein', 'Test', 'Hallo']
-
-        result = rot_word(input)
-
         assert expected == result
 
     def test_sub_word(self):
