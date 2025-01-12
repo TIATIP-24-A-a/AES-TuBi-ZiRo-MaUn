@@ -1,11 +1,11 @@
-import unittest
 from os import urandom
+import pytest
 
 from AES import matrix_to_bytes, split_blocks, sub_word, shift_rows, mix_columns, add_round_key, key_expansion, rot_word, \
     bytes_to_matrix, sub_bytes
 
 
-class AesTestCase(unittest.TestCase):
+class TestAes:
     def test_split_blocks_must_return_correct_blocks(self):
         text = b"Hallo ich binnnnI'm a 4x4 Matrix"
         expected_block_len = 2
@@ -26,9 +26,9 @@ class AesTestCase(unittest.TestCase):
         result = split_blocks(text)
         result_block_len = len(result)
 
-        self.assertEqual(expected_block_len, result_block_len)
-        self.assertEqual(expected_first_block, result[0])
-        self.assertEqual(expected_second_block, result[1])
+        assert expected_block_len == result_block_len
+        assert expected_first_block == result[0]
+        assert expected_second_block == result[1]
 
 
     def test_split_blocks_must_return_last_block_with_padding(self):
@@ -43,7 +43,7 @@ class AesTestCase(unittest.TestCase):
         result = split_blocks(text)
         result_last_block = result[-1]
 
-        self.assertEqual(expected_last_block, result_last_block)
+        assert expected_last_block == result_last_block
 
     def test_rotate_word_with_chars(self):
         input = ['a', 'b', 'c', 'd']
@@ -51,7 +51,7 @@ class AesTestCase(unittest.TestCase):
 
         result = rot_word(input)
 
-        self.assertEqual(expected, result)
+        assert expected == result
 
     def test_rotate_word_with_words(self):
         input = ['Hallo', 'ich', 'bin', 'ein', 'Test']
@@ -59,7 +59,7 @@ class AesTestCase(unittest.TestCase):
 
         result = rot_word(input)
 
-        self.assertEqual(expected, result)
+        assert expected == result
 
     def test_sub_word(self):
         word = [65, 66, 67, 68]
@@ -67,7 +67,7 @@ class AesTestCase(unittest.TestCase):
 
         result = sub_word(word)
 
-        self.assertEqual(expected, result)
+        assert expected == result
 
     def test_sub_bytes(self):
         block = [
@@ -85,7 +85,7 @@ class AesTestCase(unittest.TestCase):
 
         result = sub_bytes(block)
 
-        self.assertEqual(expected, result)
+        assert expected == result
 
     def test_shift_rows(self):
         block = [
@@ -102,7 +102,7 @@ class AesTestCase(unittest.TestCase):
         ]
         result = shift_rows(block)
 
-        self.assertEqual(result, expected)
+        assert expected == result
 
     def test_mix_columns(self):
         block = [
@@ -120,7 +120,7 @@ class AesTestCase(unittest.TestCase):
 
         result = mix_columns(block)
 
-        self.assertEqual(result, expected)
+        assert expected == result
 
     def test_add_round_key(self):
         state = [
@@ -144,11 +144,12 @@ class AesTestCase(unittest.TestCase):
 
         result = add_round_key(state, key)
 
-        self.assertEqual(expected, result)
+        assert expected == result
 
     def test_bytes_to_matrix_should_raise_error_when_not_16_bytes(self):
-        value = urandom(15)
-        self.assertRaises(ValueError, bytes_to_matrix, value)
+        with pytest.raises(ValueError):
+            value = urandom(15)
+            bytes_to_matrix(value)
 
     def test_bytes_to_matrx_should_return_matrix(self):
         value = b'ABCDEFGHIJKLMNOP'
@@ -160,7 +161,8 @@ class AesTestCase(unittest.TestCase):
         ]
 
         result = bytes_to_matrix(value)
-        self.assertEqual(expected, result)
+
+        assert expected == result
 
     def test_matrix_to_bytes(self):
         matrix = [
@@ -173,17 +175,17 @@ class AesTestCase(unittest.TestCase):
 
         result = matrix_to_bytes(matrix)
 
-        self.assertEqual(expected, result)
+        assert expected == result
 
 
-class KeyExpansionTestCase(unittest.TestCase):
+class TestKeyExpansion:
     def test_key_expansion_return_11_keys(self):
         key = urandom(16)
         expected = 11
 
         result = key_expansion(key)
 
-        self.assertEqual(expected, len(result))
+        assert expected == len(result)
 
     def test_key_expansion_expect_44_words_total(self):
         key = b'Hallo ich binnnn'
@@ -195,7 +197,7 @@ class KeyExpansionTestCase(unittest.TestCase):
         for words in round_keys:
             total_words_len += len(words)
 
-        self.assertEqual(expected, total_words_len)
+        assert expected == total_words_len
 
     def test_key_expansion_has_correct_first_and_last_key(self):
         key = b'This is a key123'
@@ -216,9 +218,5 @@ class KeyExpansionTestCase(unittest.TestCase):
         first_key = result[0]
         last_key = result[-1]
 
-        self.assertEqual(expected_first_key, first_key)
-        self.assertEqual(expected_last_key, last_key)
-
-
-if __name__ == '__main__':
-    unittest.main()
+        assert expected_first_key == first_key
+        assert expected_last_key == last_key
