@@ -72,3 +72,4 @@ Für die detaillierte Implementation siehe `AES_Test.py`.
 - AES key schedule: https://en.wikipedia.org/wiki/AES_key_schedule
 - AES Key Expansion Algorithm: https://www.tutorialspoint.com/cryptography/cryptography_aes_key_expansion_algorithm.htm
 - The AES Key Schedule explained: https://braincoke.fr/blog/2020/08/the-aes-key-schedule-explained/#aes-key-schedule
+- ChatGPT: https://chatgpt.com
