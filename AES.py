@@ -1,3 +1,5 @@
+import base64
+
 S_BOX = [
     [0x63, 0x7c, 0x77, 0x7b, 0xf2, 0x6b, 0x6f, 0xc5, 0x30, 0x01, 0x67, 0x2b, 0xfe, 0xd7, 0xab, 0x76],
     [0xca, 0x82, 0xc9, 0x7d, 0xfa, 0x59, 0x47, 0xf0, 0xad, 0xd4, 0xa2, 0xaf, 0x9c, 0xa4, 0x72, 0xc0],
@@ -196,3 +198,42 @@ def mix_columns(state):
         state[3][i] = a + b + c - d
 
     return state
+
+def encrypt(key: str, text: str) -> str:
+    key_bytes = key.encode()
+    text_bytes = text.encode()
+
+    if len(key_bytes) != 16:
+        raise Exception("Key must be 16 bytes")
+
+    round_keys = key_expansion(key_bytes)
+    blocks = split_blocks(text_bytes)
+    encrypted_blocks = []
+
+    # Jeder Block durchläuft 11 Runden. Wobei die erste Runde und die letzte Runde sich unterscheiden
+    for block in blocks:
+
+        # Erste Runde
+        state = add_round_key(block, round_keys[0])
+
+        # 9 Runden
+        for i in range(1, 10):
+            state = sub_bytes(state)
+            state = shift_rows(state)
+            state = mix_columns(state)
+            state = add_round_key(state, round_keys[i])
+
+        # Letzte Runde
+        state = sub_bytes(state)
+        state = shift_rows(state)
+        state = add_round_key(state, round_keys[10])
+
+        encrypted_blocks.append(matrix_to_bytes(state))
+
+    # Alle verschlüsselten Blöcke zusammenfügen
+    encrypted_bytes = b"".join(encrypted_blocks)
+
+    # Base64 Encoding
+    encrypted_base64 = base64.b64encode(encrypted_bytes).decode('utf-8')
+    
+    return encrypted_base64
