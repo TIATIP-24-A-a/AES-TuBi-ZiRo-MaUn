@@ -32,11 +32,11 @@ Beischreibung der Projektstruktur:
   - `README.md`: Das README File
   - `docs/handout.md`: Du bist hier
 
-# Beschreibung der AES 128 Verschlüsselung
+# Funktionsweise unserer AES(128bit) Funktion
 
-Die AES 128 akzeptiert zwei String Parameter. Beim ersten Parameter handelt es sich um den `key`. Mit dem zweiten Parameter, `text` wird der zuverschlüsselte Text angegeben.
+Unsere Funktion akzeptiert zwei String Parameter. Beim ersten Parameter handelt es sich um den `key`, welcher nachher auch zum decrypten benötigt wird. Mit dem zweiten Parameter, `text` wird der zuverschlüsselte Text angegeben.
 
-Der `key` muss genau aus 16 bytes bestehen. Dies wird validiert und es wird eine Exception geworfen.
+Der `key` muss für unsere Funktion genau aus 16 bytes bestehen. Dieser wird validiert. Bei nicht bestandener Validierung wird eine Exception asugegeben.
 Der `text` kann eine beliebige Länge haben. 
 
 
