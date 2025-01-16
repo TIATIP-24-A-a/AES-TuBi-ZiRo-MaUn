@@ -1,7 +1,7 @@
 # AES-TuBi-ZiRo-MaUn
 
 Diese AES Verschlüsselung wurde im Rahmen einer Projektarbeit ausgearbeitet.  
-Aufgrund der koplexität wurden gewise funktionen vereinfacht.  
+Aufgrund der komplexität wurden gewisse funktionen vereinfacht.  
 >![warning]  
 >Diese AES Verschlüsselung sollte **NICHT** verwendet werden.
 
