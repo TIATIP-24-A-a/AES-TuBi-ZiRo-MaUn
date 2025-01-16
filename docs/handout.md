@@ -1,29 +1,48 @@
-# Verschlüsselung: AES 128
+<style>
+img {
+  border-radius: 8px;
+}
+.flex-container {
+  display: flex;
+  flex-direction: row;
+
+}
+.flex-container > div {
+  max-height: 350px; 
+  margin-right: 15px; 
+}
+
+</style>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+# Verschlüsselung: AES 128 bit
 
 Gruppenarbeit von Rodrigo Zihlmann, Matthias Unternährer und Tuan Binh Tran
 
 # Einleitung
 
 Dieses Handout beschreibt unsere Lösung zur Python-Aufgabe "Verschlüsselung: AES".
-Dabei sind unsere Funktion und Tests beschrieben. Auch unsere Gedanken sind festgehalten.
+Im Handout sind unsere Funktionen und Tests zusammengefasst beschrieben. Unsere Gedanken haben wir ebenfalls in diesem Dokument festgehalten.
 
-Die Ziele und Bewertung sind der Aufgabe "Übung II: Fortgeschrittene Algorithmen" zu entnehmen: https://github.com/fhirter/Software-Engineering/blob/master/ProgrammingBasicsAndAlgorithms/Exercises/Advanced/Tasks.md
+Die Ziele und Bewertungkriterien sind der Aufgabe "Übung II: Fortgeschrittene Algorithmen" zu entnehmen: https://github.com/fhirter/Software-Engineering/blob/master/ProgrammingBasicsAndAlgorithms/Exercises/Advanced/Tasks.md
 
 
 # Ziele
 
 - Fokus auf die 128-bit Variante von AES
 - Fokus auf Encryption
-- Decryption Optional bzw. wenn genügend Zeit vorhanden
+- Code sollte möglichst wenig zusätzliche Librarys verwenden.
 - Die Encryption liefert den verschlüsselten Text in Base64 zurück
 - Bei Komplexeren Funktionen, wird die Logik vereinfacht und im Code beschrieben
+- Optional: Decryption (wenn genügend Zeit vorhanden)
 
 
 # Projektstruktur
 
-Das Repository ist im Github aufzufinden: https://github.com/TIATIP-24-A-a/AES-TuBi-ZiRo-MaUn
+Das Repository ist im Github unter folgendem Link zufinden: https://github.com/TIATIP-24-A-a/AES-TuBi-ZiRo-MaUn
 
-Beischreibung der Projektstruktur:
+Beschreibung der Projektstruktur:
 
 - `/`: Root
   - `AES.py`: AES 128 mit allen benötigten Funktionen
@@ -31,28 +50,85 @@ Beischreibung der Projektstruktur:
   - `.gitignore`: Ignorieren von Dateien im Git
   - `README.md`: Das README File
   - `docs/handout.md`: Du bist hier
+  <br>
+  <br>
+
 
 # Funktionsweise unserer AES(128bit) Funktion
 
-Unsere Funktion akzeptiert zwei String Parameter. Beim ersten Parameter handelt es sich um den `key`, welcher nachher auch zum decrypten benötigt wird. Mit dem zweiten Parameter, `text` wird der zuverschlüsselte Text angegeben.
+Unsere Funktion akzeptiert zwei String Parameter. Beim ersten Parameter handelt es sich um den `key`, welcher zum encrypten sowohl auch zum decrypten benötigt wird. Mit dem zweiten Parameter, `text` wird der zuverschlüsselte Text angegeben.\
+Der `key` muss für unsere Funktion genau aus 16 bytes bestehen. Dieser wird validiert. Bei nicht bestandener Validierung wird eine Exception ausgegeben und bricht die Verschlüsselung ab.
+Der `text` kann in unserer Funktion eine beliebige Länge haben.\
+Die beiden Parameter werden beim Start der Funktion in bytes und anschliessend in 4x4 Matrixen umgewandelt. Dieser schritt ist essenziell für die weiterführenden Operationen. 
 
-Der `key` muss für unsere Funktion genau aus 16 bytes bestehen. Dieser wird validiert. Bei nicht bestandener Validierung wird eine Exception asugegeben.
-Der `text` kann eine beliebige Länge haben. 
-
-
-Die Funktion wandelt zum Start die beiden Parametern in bytes um. Dies ist für die Weiterverarbeitung wichtig.
-Ebenfalls werden die bytes in ein 4x4 Matrix umgewandelt. 
-
-Die AES 128 umfasst verschiedene Funktionen, welche bei der Encryption benötigt wird:
+Die AES 128bit Verschlüsselung erfolgt in 10 Runden. Eine Runde setzt sich dabei aus mehreren Funktionen zusammen. 
 
 - Key Expansion
-- Erste Runde
+- Initial Runde
   - Add Round Key
 - Restliche Runden
   - Sub Bytes
   - Shift Rows
-  - Mix Columns (Wird in der letzten Runde nicht ausgeführt)
-  - Add Round Key
+  - Mix Columns
+  - Add Round Key <br>
+
+<br>
+
+  
+
+
+
+  
+
+#### Add Round Key (Initial Runde): 
+In der ersten Runde wird, mithilfe des initial Key und einer XoR berechnung, der zu verschlüsselnde Text, welcher nun in Blöcke aufgeteilt ist neu geschrieben.
+#### Sub Bytes: 
+<div class="flex-container">
+<div >  
+<p>
+Diese Funktion ersetzt die Bytes der Blöcke durch Werte aus der sogenannten S-Box(Substitutionsbox) 
+</div> <div style="flex-basis: 600px">
+<img align="right"  style="max-width:600px" src="../img/to_subbytes.jpg" alt="Subbytes"> 
+<p style="font-size:75%;color:gray"> <i>Quelle: https://www.davidwong.fr/blockbreakers/aes_9_addroundkey.html</i></p>
+</div>
+</div>
+
+#### Shift Rows: 
+<div class="flex-container">
+<div >  
+<p>
+Nun verschiebt die Funktion die Werte in den jeweiligen Blöcken zeilenweise um eine gewisse Anzahl Spalten verschoben.
+</div> <div style="flex-basis: 600px">
+<img align="right" style="max-width:600px" src="../img/to_shiftrows.jpg" alt="shiftrows"> 
+<p style="font-size:75%;color:gray"> <i>Quelle: https://www.davidwong.fr/blockbreakers/aes_9_addroundkey.html</i></p>
+</div>
+</div>
+
+#### Mix Columns: 
+In diesem Schritt werden die einzelnen Spalten über ein Galois Feld (2^8) multipliziert.\
+Ziel dieser Funktion ist, dass die Spalten vermischt werden.\
+In der letzten Runde wird diese funktion nicht mehr ausgeführt.
+> [!NOTE]  
+> Aufgrund der komplexität der mathematischen Berechnung haben wir dies in unserem Code stark vereinfacht.
+
+#### Add Roundkey: 
+<div class="flex-container">
+<div >  
+<p>
+Hier wird nun jeder Block mithilfe des aktuellen Rundenschlüssel und einer XOR berechnung neu erstellt. 
+</div> <div style="flex-basis: 600px">
+
+<img align="right" style="max-width:400px" src="../img/add_roundkey.png" alt="roundkey"> 
+<p style="font-size:80%;color:gray"> <i>Quelle: https://www.davidwong.fr/blockbreakers/aes_9_addroundkey.html</i></p>
+</div>
+</div>
+<br>
+<br>
+Nach beenden der Runden wird der Wert in einen für uns lesbareren Wert umgewandelt und ausgegeben. Dieser Text ist nun in verschlüsselter Form ersichtlich.
+<br>
+<br>
+
+
 
 # Unit Tests
 
@@ -63,8 +139,12 @@ Für die detaillierte Implementation siehe `AES_Test.py`.
 
 
 # Erkenntnisse
-- AES ist komplex
-- Zusammenspiel von verschiedenen Algorithmen ist schwierig
+
+- AES ist sehr komplex.
+- Zusammenspiel von verschiedenen Algorithmen ist schwierig.
+- Aufwändig den Code ohne zusätzlichen Librarys zu erstellen.
+
+
 
 # Quellen
 - AES: Step-by-Step In-Depth: https://medium.com/@dillihangrae/aes-advanced-encryption-standard-step-by-step-in-depth-understanding-62a9db709902
