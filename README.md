@@ -2,7 +2,7 @@
 
 Diese AES Verschlüsselung wurde im Rahmen einer Projektarbeit ausgearbeitet.  
 Aufgrund der komplexität wurden gewisse funktionen vereinfacht.  
->![warning]  
+>[!WARNING]
 >Diese AES Verschlüsselung sollte **NICHT** verwendet werden.
 
 # Dependencies installieren
