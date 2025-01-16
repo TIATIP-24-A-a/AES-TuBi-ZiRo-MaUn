@@ -151,6 +151,23 @@ Da AES aus verschiedenste Funktionen besteht, wurde diese geprüft.
 
 Für die detaillierte Implementation siehe `AES_Test.py`.
 
+# Komplexitätsanalyse
+
+Ergebnis gemäss Benchmark-Daten
+
+| Input Size | Time (milliseconds) |
+|------------|---------------------|
+| 10 | 0.058532 |
+| 100 | 0.325612 |
+| 1000 | 2.735687 |
+| 10000 | 27.157852 |
+| 100000 | 271.913340 |
+| 1000000 | 2771.543940 |
+
+<img style="max-width:400px" src="../aes_128_encryption_plot.png" alt="AES 128 Plot"> 
+
+
+
 
 # Erkenntnisse
 
