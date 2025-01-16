@@ -30,20 +30,20 @@ times = np.array(times)
 times = times * 1e6  # Scale times to microseconds
 
 # Plot the benchmark data
-plt.plot(sizes, times, marker='o', label='Benchmark Data')
+plt.plot(sizes, times, marker='o', label='AES 128 Encrypt')
 
 # Plot common Big O complexity lines for comparison
 plt.plot(sizes, np.ones_like(sizes) * times[0], label='O(1), O(log n)')
-# plt.plot(sizes, np.log(sizes), label='O(log n)')
 plt.plot(sizes, sizes, label='O(n)')
 plt.plot(sizes, sizes * np.log(sizes), label='O(n log n)')
 
 # Add labels and title
 plt.xlabel('Input Size')
 plt.ylabel('Time (microseconds)')
-plt.title('Big O Plot of AES Encryption')
+plt.title('Big O Plot of AES 128 Encryption')
 plt.xscale('log')
 plt.yscale('log')
 plt.legend()
 plt.grid(True)
+
 plt.show()
