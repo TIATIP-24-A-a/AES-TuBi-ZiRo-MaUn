@@ -1,16 +1,26 @@
-<style>
-img {
-  border-radius: 8px;
-}
-.flex-container {
-  display: flex;
-  flex-direction: row;
+<style>  
 
-}
-.flex-container > div {
-  max-height: 350px; 
-  margin-right: 15px; 
-}
+img {  
+
+  border-radius: 8px;  
+
+}  
+
+.flex-container {  
+  display: flex;  
+
+  flex-direction: row;  
+
+
+}  
+
+.flex-container > div {  
+
+  max-height: 350px;   
+
+  margin-right: 15px;   
+
+}  
 
 </style>
 
