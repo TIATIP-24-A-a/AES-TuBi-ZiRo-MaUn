@@ -6,13 +6,13 @@ import math
 
 """
 1. Generate data
-pytest --benchmark-json=benchmark_data.json --benchmark-only
+pytest --benchmark-json=benchmark/benchmark_data.json --benchmark-only
 
 2. Show the plot
-python plot_benchmark_encrypt.py
+python benchmark/plot_benchmark_encrypt.py
 """
 
-with open('./benchmark_data.json') as f:
+with open('./benchmark/benchmark_data.json') as f:
     data = json.load(f)
 
 # Extract the sizes and times
