@@ -46,4 +46,6 @@ plt.yscale('log')
 plt.legend()
 plt.grid(True)
 
+plt.savefig('aes_128_encryption_plot.png')
+
 plt.show()
