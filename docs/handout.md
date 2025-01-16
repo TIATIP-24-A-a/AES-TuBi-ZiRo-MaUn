@@ -60,6 +60,10 @@ Beschreibung der Projektstruktur:
   - `.gitignore`: Ignorieren von Dateien im Git
   - `README.md`: Das README File
   - `docs/handout.md`: Du bist hier
+  - `/benchmark`
+    - `benchmark_test.py`: Erstellung der Benchmarks
+    - `benchmark_data.json`: Wird vom Benchmark generiert
+    - `plot_benchmark_encrypt.py`: Erstellung des Plots anhand Benchmark
   <br>
   <br>
 
