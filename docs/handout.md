@@ -1,29 +1,3 @@
-<style>  
-
-img {  
-
-  border-radius: 8px;  
-
-}  
-
-.flex-container {  
-  display: flex;  
-
-  flex-direction: row;  
-
-
-}  
-
-.flex-container > div {  
-
-  max-height: 350px;   
-
-  margin-right: 15px;   
-
-}  
-
-</style>
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 # Verschlüsselung: AES 128 bit
@@ -52,22 +26,6 @@ Die Ziele und Bewertungkriterien sind der Aufgabe "Übung II: Fortgeschrittene A
 
 Das Repository ist im Github unter folgendem Link zufinden: https://github.com/TIATIP-24-A-a/AES-TuBi-ZiRo-MaUn
 
-Beschreibung der Projektstruktur:
-
-- `/`: Root
-  - `AES.py`: AES 128 mit allen benötigten Funktionen
-  - `AES_Test.py`: Unit-Tests für `AES.py`
-  - `.gitignore`: Ignorieren von Dateien im Git
-  - `README.md`: Das README File
-  - `docs/handout.md`: Du bist hier
-  - `/benchmark`
-    - `benchmark_test.py`: Erstellung der Benchmarks
-    - `benchmark_data.json`: Wird vom Benchmark generiert
-    - `plot_benchmark_encrypt.py`: Erstellung des Plots anhand Benchmark
-  <br>
-  <br>
-
-
 # Funktionsweise unserer AES(128bit) Funktion
 
 Unsere Funktion akzeptiert zwei String Parameter. Beim ersten Parameter handelt es sich um den `key`, welcher zum encrypten sowohl auch zum decrypten benötigt wird. Mit dem zweiten Parameter, `text` wird der zuverschlüsselte Text angegeben.\
@@ -89,32 +47,33 @@ Die AES 128bit Verschlüsselung erfolgt in 10 Runden. Eine Runde setzt sich dabe
 <br>
 
   
-
-
-
   
 
 #### Add Round Key (Initial Runde): 
 In der ersten Runde wird, mithilfe des initial Key und einer XoR berechnung, der zu verschlüsselnde Text, welcher nun in Blöcke aufgeteilt ist neu geschrieben.
-#### Sub Bytes: 
+#### <img align="right"  style="width:400px" src="../img/to_subbytes.jpg" alt="Subbytes" />  Sub Bytes: 
 <div class="flex-container">
 <div >  
 <p>
 Diese Funktion ersetzt die Bytes der Blöcke durch Werte aus der sogenannten S-Box(Substitutionsbox) 
-</div> <div style="flex-basis: 600px">
-<img align="right"  style="max-width:600px" src="../img/to_subbytes.jpg" alt="Subbytes"> 
-<p style="font-size:75%;color:gray"> <i>Quelle: https://www.davidwong.fr/blockbreakers/aes_9_addroundkey.html</i></p>
-</div>
+</p>
+<br>
+<br>
+<br>
+<br>
+<br>
+</div> 
 </div>
 
-#### Shift Rows: 
+#### <img align="right" style="width:400px" src="../img/to_shiftrows.jpg" alt="shiftrows" />  Shift Rows: 
 <div class="flex-container">
 <div >  
 <p>
 Nun verschiebt die Funktion die Werte in den jeweiligen Blöcken zeilenweise um eine gewisse Anzahl Spalten verschoben.
-</div> <div style="flex-basis: 600px">
-<img align="right" style="max-width:600px" src="../img/to_shiftrows.jpg" alt="shiftrows"> 
-<p style="font-size:75%;color:gray"> <i>Quelle: https://www.davidwong.fr/blockbreakers/aes_9_addroundkey.html</i></p>
+<br>
+<br>
+<br>
+<br>
 </div>
 </div>
 
@@ -125,16 +84,13 @@ In der letzten Runde wird diese funktion nicht mehr ausgeführt.
 > [!NOTE]  
 > Aufgrund der komplexität der mathematischen Berechnung haben wir dies in unserem Code stark vereinfacht.
 
-#### Add Roundkey: 
+
+#### <img align="right" style="width:400px" src="../img/add_roundkey.png" alt="roundkey" /> Add Roundkey: 
 <div class="flex-container">
 <div >  
 <p>
 Hier wird nun jeder Block mithilfe des aktuellen Rundenschlüssel und einer XOR berechnung neu erstellt. 
-</div> <div style="flex-basis: 600px">
-
-<img align="right" style="max-width:400px" src="../img/add_roundkey.png" alt="roundkey"> 
-<p style="font-size:80%;color:gray"> <i>Quelle: https://www.davidwong.fr/blockbreakers/aes_9_addroundkey.html</i></p>
-</div>
+</div> 
 </div>
 <br>
 <br>
@@ -184,3 +140,4 @@ Ergebnis gemäss Benchmark-Daten
 - AES Key Expansion Algorithm: https://www.tutorialspoint.com/cryptography/cryptography_aes_key_expansion_algorithm.htm
 - The AES Key Schedule explained: https://braincoke.fr/blog/2020/08/the-aes-key-schedule-explained/#aes-key-schedule
 - ChatGPT: https://chatgpt.com
+- Sub Bytes, Shift Rows, Add Round Key Bilder: https://www.davidwong.fr/blockbreakers/aes_9_addroundkey.html
